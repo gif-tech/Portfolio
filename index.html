@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Shah — E-commerce Expert</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112040;
+    --navy-light: #1a3060;
+    --cream: #f5f0e8;
+    --cream-dim: #e8e0d0;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text-muted: rgba(245,240,232,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(10,22,40,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(17,32,64,0.8) 0%, transparent 60%),
+      linear-gradient(160deg, #0a1628 0%, #0f2040 50%, #0a1628 100%);
+  }
+
+  /* Animated lines */
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-lines::before, .hero-lines::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    animation: lineFall 6s ease-in-out infinite;
+    opacity: 0.2;
+  }
+
+  .hero-lines::before { left: 25%; animation-delay: 0s; }
+  .hero-lines::after  { left: 75%; animation-delay: 3s; }
+
+  @keyframes lineFall {
+    0%, 100% { transform: translateY(-100%); opacity: 0; }
+    30%, 70%  { opacity: 0.25; }
+    50%       { transform: translateY(100%); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 32px auto;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .hero-tagline {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    line-height: 2.2;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:hover::before { transform: scaleX(1); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-outline {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    background: var(--gold-dim);
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2s forwards;
+  }
+
+  .scroll-icon {
+    width: 20px;
+    height: 30px;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scroll-icon::after {
+    content: '';
+    width: 2px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 1px;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(-4px); opacity: 0; }
+    50%      { opacity: 1; }
+    100%     { transform: translateY(4px); opacity: 0; }
+  }
+
+  .scroll-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 120px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-dim);
+    max-width: 60px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--cream);
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin: 60px 0;
+  }
+
+  .skill-card {
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(17,32,64,0.4), rgba(26,48,96,0.2));
+    border: 1px solid rgba(201,168,76,0.2);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+  }
+
+  .skill-card:hover {
+    background: linear-gradient(135deg, rgba(17,32,64,0.6), rgba(26,48,96,0.4));
+    border-color: var(--gold);
+    transform: translateY(-8px);
+  }
+
+  .skill-cat {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .skill-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--cream);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 14px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--cream-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .skill-card:hover .tag {
+    background: rgba(201,168,76,0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    opacity: 0;
+  }
+
+  .exp-item:last-child {
+    border-bottom: none;
+  }
+
+  .exp-meta {
+    position: sticky;
+    top: 120px;
+  }
+
+  .exp-period {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .exp-type {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+
+  .exp-body {
+    color: var(--cream-dim);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .exp-bullets li {
+    padding: 12px 0;
+    padding-left: 24px;
+    position: relative;
+    color: var(--cream-dim);
+    line-height: 1.8;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section {
+    background: linear-gradient(135deg, rgba(17,32,64,0.3), rgba(10,22,40,0.5));
+    padding: 120px 60px;
+  }
+
+  .testimonials-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .testi-card {
+    padding: 36px;
+    background: rgba(17,32,64,0.4);
+    border: 1px solid rgba(201,168,76,0.15);
+    transition: all 0.4s;
+    opacity: 0;
+  }
+
+  .testi-card:hover {
+    background: rgba(17,32,64,0.7);
+    border-color: var(--gold);
+  }
+
+  .testi-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .testi-stars {
+    color: var(--gold);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.15em;
+  }
+
+  .testi-quote {
+    color: var(--cream-dim);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testi-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold-dim);
+    margin: 24px 0;
+  }
+
+  .testi-author {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .testi-avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-weight: 500;
+    color: var(--cream);
+    font-size: 0.95rem;
+  }
+
+  .testi-role {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    text-align: center;
+    padding: 120px 60px;
+  }
+
+  .contact-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--cream);
+    margin: 30px 0 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .contact-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .contact-sub {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    margin-bottom: 48px;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .contact-ctas {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .btn-fiverr, .btn-linkedin {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 1px solid var(--gold);
+  }
+
+  .btn-linkedin {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-fiverr:hover, .btn-linkedin:hover {
+    background: var(--gold-light);
+    color: var(--navy);
+  }
+
+  .contact-platforms {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .platform-link-lg {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+  }
+
+  .platform-link-lg:hover {
+    color: var(--gold-light);
+  }
+
+  .platform-dot {
+    color: var(--cream-dim);
+  }
+
+  /* ── GOLD RULE ── */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .footer-copy {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav {
+      padding: 16px 24px;
+    }
+
+    .nav-links {
+      gap: 24px;
+    }
+
+    section {
+      padding: 80px 24px;
+    }
+
+    .hero {
+      padding: 100px 24px 60px;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .exp-item {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .exp-meta {
+      position: static;
+    }
+
+    .section-label::after {
+      display: none;
+    }
+
+    .contact-ctas {
+      flex-direction: column;
+    }
+
+    .btn-fiverr, .btn-linkedin {
+      width: 100%;
+      text-align: center;
+    }
+
+    .testi-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hamza Shah</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">E-commerce expert & digital strategist</div>
+    <h1 class="hero-name reveal">Hamza <em>Shah</em></h1>
+    <div class="hero-divider"></div>
+    <div class="hero-tagline reveal">eBay Consultant • Brand Designer • Digital Marketer</div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary reveal"><span>Get Started</span></a>
+      <a href="https://www.fiverr.com/hamza__sha" target="_blank" class="btn-outline reveal">View Work</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-icon"></div>
+    <div class="scroll-text">Scroll</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">01 &nbsp; Skills</div>
+  <h2 class="section-title reveal">What I<br><em>Deliver</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-cat">E-Commerce</div>
+      <div class="skill-name">eBay Mastery</div>
+      <div class="skill-tags">
+        <span class="tag">Account Setup</span>
+        <span class="tag">Dropshipping</span>
+        <span class="tag">Listing Optimization</span>
+        <span class="tag">VPS Management</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">E-Commerce</div>
+      <div class="skill-name">Digital Marketing</div>
+      <div class="skill-tags">
+        <span class="tag">Social Media</span>
+        <span class="tag">SEO Optimization</span>
+        <span class="tag">Content Strategy</span>
+        <span class="tag">Paid Ads</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Design</div>
+      <div class="skill-name">Brand Identity</div>
+      <div class="skill-tags">
+        <span class="tag">Logo Design</span>
+        <span class="tag">AI Imagery</span>
+        <span class="tag">Video Creation</span>
+        <span class="tag">Brand Strategy</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Operations</div>
+      <div class="skill-name">Fulfilment & Tools</div>
+      <div class="skill-tags">
+        <span class="tag">Order Fulfilment</span>
+        <span class="tag">Customer Relations</span>
+        <span class="tag">eBOSS</span>
+        <span class="tag">Tool Integration</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Technology</div>
+      <div class="skill-name">IT & Cybersecurity</div>
+      <div class="skill-tags">
+        <span class="tag">Ethical Hacking</span>
+        <span class="tag">Cybersecurity</span>
+        <span class="tag">AI Tools</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Soft Skills</div>
+      <div class="skill-name">Strategy & Insight</div>
+      <div class="skill-tags">
+        <span class="tag">Market Research</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Strategic Planning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">03 &nbsp; Experience</div>
+  <h2 class="section-title reveal">Work<br><em style="font-style:italic;color:var(--gold);">History</em></h2>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Feb 2026 — Present</div>
+        <div class="exp-type">Freelance · Remote</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Active eBay Consultant</h3>
+        <p class="exp-body">Focused on scaling store performance by hunting winning dropshipping products through rigorous data analysis. Regularly monitored and benchmarked competitors to adapt pricing and listing strategies, ensuring stores remained highly competitive.</p>
+        <ul class="exp-bullets">
+          <li>Technical VPS setup and healthy account management</li>
+          <li>End-to-end order lifecycle management from sourcing to support</li>
+          <li>Competitor benchmarking and dynamic pricing strategies</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Sep 2025 — Nov 2025</div>
+        <div class="exp-type">Freelance · Remote</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Digital Marketing Associate</h3>
+        <ul class="exp-bullets">
+          <li>Developed and managed social media campaigns across multiple platforms</li>
+          <li>Created tailored digital marketing strategies aligned to client business goals</li>
+          <li>Conducted market research and consumer behaviour analysis</li>
+          <li>Optimised website content for SEO, improving organic search rankings</li>
+          <li>Monitored online reputation management across all digital channels</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-section" id="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-label reveal">04 &nbsp; Testimonials</div>
+    <h2 class="section-title reveal">Client<br><em style="font-style:italic;color:var(--gold);">Reviews</em></h2>
+    <div class="testi-grid">
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">Logo Design</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Honestly didn't expect this level of quality for the price. Sent over a rough idea and got back something way better than I imagined. Clean, professional, exactly the vibe I was going for. Will 100% come back for future projects.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div>
+            <div class="testi-name">Ahmed K.</div>
+            <div class="testi-role">Small Business Owner · Dubai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">eBay Account Setup</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">I was totally lost with eBay — didn't know where to start. Got everything sorted out, store set up properly, listings live. Made my first sale within 10 days. Communicates well and actually explains what he's doing, which I appreciated.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div>
+            <div class="testi-name">S. Rehman</div>
+            <div class="testi-role">New eBay Seller · UK</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">Marketing Strategy</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Really solid work. The strategy doc was detailed, well-researched and actually useful — not just generic advice you could google. We used it for our launch and the results were better than our previous campaigns. Good communication throughout.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">OT</div>
+          <div>
+            <div class="testi-name">Omar T.</div>
+            <div class="testi-role">Brand Manager · Pakistan</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">eBay Account Maintenance</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">My account had a defect rate issue and I was panicking. Got it sorted quickly — listings cleaned up, metrics back on track. Didn't oversell or make promises, just fixed the problem. That's all I needed, and it delivered.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">FN</div>
+          <div>
+            <div class="testi-name">Faisal N.</div>
+            <div class="testi-role">Online Reseller · Canada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">Dropshipping & Product Research</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Came with a list of products I thought were winners — most of them got flagged as risky. The research was honest, not just telling me what I wanted to hear. Found 3 solid products that are actually selling now. Worth every penny.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">ZM</div>
+          <div>
+            <div class="testi-name">Zain M.</div>
+            <div class="testi-role">Dropshipper · UAE</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-tag">Brand Identity</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">Needed a logo fast for a pitch and it came through on time, looking sharp. Got the source files, different formats, dark and light versions — everything I needed without having to ask twice. Simple, professional experience.</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">RI</div>
+          <div>
+            <div class="testi-name">R. Iqbal</div>
+            <div class="testi-role">Startup Founder · Lahore</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="gold-rule"></div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal" style="justify-content:center;">05 &nbsp; Contact</div>
+    <h2 class="contact-title reveal">Let's<br><em>Work</em><br>Together</h2>
+    <p class="contact-sub reveal">Available for freelance projects · Remote worldwide</p>
+    <div class="contact-ctas reveal">
+      <a href="https://www.fiverr.com/hamza__sha" target="_blank" class="btn-fiverr">
+        <span>✦ &nbsp; Hire Me on Fiverr</span>
+      </a>
+      <a href="https://www.peopleperhour.com/freelancer/business/hamza-shah-ebay-consultant-digital-marketer-zxvamzmm" target="_blank" class="btn-linkedin">
+        PeoplePerHour
+      </a>
+    </div>
+    <div class="contact-platforms reveal">
+      <a href="https://www.freelancer.com/u/hamzas479" target="_blank" class="platform-link-lg">Freelancer.com</a>
+      <span class="platform-dot">·</span>
+      <a href="https://dribbble.com/hamza_sha" target="_blank" class="platform-link-lg">Dribbble</a>
+      <span class="platform-dot">·</span>
+      <a href="https://www.linkedin.com/in/hamza-shah-020183285" target="_blank" class="platform-link-lg">LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Hamza Shah</div>
+  <div class="footer-copy">© 2026 · E-commerce Expert · Pakistan</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 80
+      ? 'rgba(10,22,40,0.97)'
+      : 'linear-gradient(to bottom, rgba(10,22,40,0.95), transparent)';
+  });
+</script>
+</body>
+</html>
